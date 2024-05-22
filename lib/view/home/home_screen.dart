@@ -1,9 +1,6 @@
 import 'package:ai_space/controller/chat_controller.dart';
-import 'package:ai_space/controller/sidebar_controller.dart';
 import 'package:ai_space/core/constants/const_colors.dart';
 import 'package:ai_space/core/constants/constants.dart';
-import 'package:ai_space/view/auth/login_screen.dart';
-import 'package:ai_space/view/auth/verification_screen.dart';
 import 'package:ai_space/view/home/widget/drop_down_widget.dart';
 import 'package:ai_space/view/home/widget/sidebar_widget.dart';
 import 'package:ai_space/view/home/widget/specialized_suggestion_widget.dart';
@@ -22,7 +19,6 @@ class HomeScreen extends StatelessWidget {
     bool isTablet = size.width > 600 && size.width < 960;
     bool isMobile = size.width < 600;
     final chatController = Get.find<ChatController>();
-    final sideBarController = Get.find<SideBarController>();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -38,26 +34,22 @@ class HomeScreen extends StatelessWidget {
           Row(
             children: [
               const MyDropdownButton(),
-              const SizedBox(width: 10),
               const MyDropdownButton(),
-              const SizedBox(width: 10),
-              const MyDropdownButton(),
-              const SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  Get.to(const LoginScreen());
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              const SizedBox(width: 5),
+              InkWell(
+                onTap: () => Get.toNamed("/signUp"),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                  decoration: const BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: const Text(
+                    "Sign In",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
-                child: const Text(
-                  "Sign In",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+              )
             ],
           ),
         ],
@@ -150,6 +142,9 @@ class HomeScreen extends StatelessWidget {
                                   : const EdgeInsets.symmetric(
                                       vertical: 20, horizontal: 20),
                             ),
+                            onFieldSubmitted: (value) async {
+                              await chatController.chatRequest();
+                            },
                           ),
                         ),
                         kHeight(20),
@@ -228,6 +223,12 @@ class HomeScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                chatController.isLoading.value
+                    ? LottieBuilder.asset(
+                        "assets/Loading2.json",
+                        height: 100,
+                      )
+                    : const SizedBox(),
                 Row(
                   children: [
                     Expanded(
@@ -236,29 +237,21 @@ class HomeScreen extends StatelessWidget {
                           controller: chatController.textEditingController,
                           style: const TextStyle(fontSize: 25),
                           decoration: InputDecoration(
-                            suffixIcon: chatController.isLoading.value
-                                ? Padding(
-                                    padding: const EdgeInsets.only(right: 20),
-                                    child: LottieBuilder.asset(
-                                      "assets/Loading.json",
-                                      height: 15,
-                                    ),
-                                  )
-                                : Container(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        await chatController.chatRequest();
-                                      },
-                                      child: CircleAvatar(
-                                        backgroundColor: kPrimaryColor,
-                                        child: Icon(
-                                          Icons.search,
-                                          color: kWhiteColor,
-                                        ),
-                                      ),
-                                    ),
+                            suffixIcon: Container(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: InkWell(
+                                onTap: () async {
+                                  await chatController.chatRequest();
+                                },
+                                child: CircleAvatar(
+                                  backgroundColor: kPrimaryColor,
+                                  child: Icon(
+                                    Icons.search,
+                                    color: kWhiteColor,
                                   ),
+                                ),
+                              ),
+                            ),
                             hintText:
                                 "know our new product approved by Dubai Municipality? |",
                             hintStyle: TextStyle(
@@ -280,6 +273,9 @@ class HomeScreen extends StatelessWidget {
                                 : const EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 20),
                           ),
+                          onFieldSubmitted: (value) async {
+                            await chatController.chatRequest();
+                          },
                         ),
                       ),
                     ),

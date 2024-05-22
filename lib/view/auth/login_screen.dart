@@ -84,7 +84,7 @@ class LoginScreen extends StatelessWidget {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Get.to(const EmailVerificationScreen());
+                                Get.toNamed("/emailVerificationScreen");
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -159,14 +159,18 @@ class LoginScreen extends StatelessWidget {
                             kHeight(5),
                             TextFormField(
                               decoration: const InputDecoration(
+                                  hintText: "Designation"),
+                            ),
+                            kHeight(5),
+                            TextFormField(
+                              decoration: const InputDecoration(
                                   hintText: "Company Email Address"),
                             ),
                           ],
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            sideBarController.selectedPageIdx.value = 5;
-                            sideBarController.update();
+                            Get.toNamed("/emailVerificationScreen");
                           },
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(

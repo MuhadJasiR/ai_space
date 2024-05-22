@@ -13,11 +13,12 @@ class MyDropdownButtonState extends State<MyDropdownButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.green,
         ),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(7),
       ),
       child: DropdownButton<String>(
         value: dropdownValue,

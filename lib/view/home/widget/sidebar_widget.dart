@@ -2,6 +2,7 @@ import 'package:ai_space/controller/chat_controller.dart';
 import 'package:ai_space/controller/sidebar_controller.dart';
 import 'package:ai_space/core/constants/const_colors.dart';
 import 'package:ai_space/core/constants/constants.dart';
+import 'package:ai_space/view/home/widget/table_size_side_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,30 +17,7 @@ class MyDrawer extends StatelessWidget {
     final chatController = Get.find<ChatController>();
     final sideBarController = Get.find<SideBarController>();
     if (isTabletSize) {
-      return SizedBox(
-        width: size.width * 0.05,
-        child: Drawer(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.grid_view_outlined)),
-                IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.add_box_rounded)),
-                const Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.blur_circular_rounded)),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
-              ],
-            ),
-          ),
-        ),
-      );
+      return TabletSizeSideBar(size: size);
     } else if (isDesktopSize) {
       return Drawer(
         child: Padding(
@@ -49,8 +27,11 @@ class MyDrawer extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child:
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+                child: IconButton(
+                    onPressed: () {
+                      sideBarController.isMinimized.toggle();
+                    },
+                    icon: const Icon(Icons.menu)),
               ),
               ListTile(
                 selected: true,
@@ -149,6 +130,8 @@ class MobileDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sideBarController = Get.find<SideBarController>();
+
     return Drawer(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -157,7 +140,11 @@ class MobileDrawer extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+              child: IconButton(
+                  onPressed: () {
+                    sideBarController.isMinimized.toggle();
+                  },
+                  icon: const Icon(Icons.menu)),
             ),
             ListTile(
               selectedColor: kPrimaryColor,
@@ -217,16 +204,12 @@ class MobileDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.blur_circular_rounded),
               title: const Text('Discover'),
-              onTap: () {
-                // Navigate to settings page
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('Settings'),
-              onTap: () {
-                // Navigate to settings page
-              },
+              onTap: () {},
             ),
           ],
         ),

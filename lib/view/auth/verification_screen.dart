@@ -1,6 +1,7 @@
 import 'package:ai_space/core/constants/const_colors.dart';
 import 'package:ai_space/core/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EmailVerificationScreen extends StatelessWidget {
   const EmailVerificationScreen({super.key});
@@ -12,7 +13,6 @@ class EmailVerificationScreen extends StatelessWidget {
     bool isMobile = size.width < 600;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: SizedBox(
           height: size.height * 0.04,
           child: Image.asset(
@@ -158,7 +158,9 @@ class EmailVerificationScreen extends StatelessWidget {
                           ],
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.offAllNamed("/emailRequestScreen");
+                          },
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
@@ -177,7 +179,9 @@ class EmailVerificationScreen extends StatelessWidget {
                               style: TextStyle(color: kGreyColor),
                             ),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.toNamed("/emailRequestScreen");
+                                },
                                 child: Text(
                                   "Log in",
                                   style: TextStyle(color: kGreenColor),
