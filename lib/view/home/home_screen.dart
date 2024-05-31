@@ -2,7 +2,6 @@ import 'package:ai_space/controller/chat_controller.dart';
 import 'package:ai_space/core/constants/const_colors.dart';
 import 'package:ai_space/core/constants/constants.dart';
 import 'package:ai_space/view/home/widget/drop_down_widget.dart';
-import 'package:ai_space/view/home/widget/sidebar_widget.dart';
 import 'package:ai_space/view/home/widget/specialized_suggestion_widget.dart';
 import 'package:ai_space/view/home/widget/suggested_question_widget.dart';
 
@@ -20,41 +19,43 @@ class HomeScreen extends StatelessWidget {
     bool isMobile = size.width < 600;
     final chatController = Get.find<ChatController>();
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: SizedBox(
-          height: size.height * 0.04,
-          child: Image.asset(
-            isMobile || isTablet
-                ? "assets/dutco_single_logo.png"
-                : "assets/Dutco_Logo.png",
-          ),
-        ),
-        actions: [
-          Row(
-            children: [
-              const MyDropdownButton(),
-              const MyDropdownButton(),
-              const SizedBox(width: 5),
-              InkWell(
-                onTap: () => Get.toNamed("/signUp"),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                  decoration: const BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: const Text(
-                    "Sign In",
-                    style: TextStyle(color: Colors.white),
-                  ),
+      appBar: size.width < 600
+          ? null
+          : AppBar(
+              automaticallyImplyLeading: false,
+              title: SizedBox(
+                height: size.height * 0.04,
+                child: Image.asset(
+                  isMobile || isTablet
+                      ? "assets/dutco_single_logo.png"
+                      : "assets/Dutco_Logo.png",
                 ),
-              )
-            ],
-          ),
-        ],
-      ),
-      drawer: const MobileDrawer(),
+              ),
+              actions: [
+                Row(
+                  children: [
+                    const MyDropdownButton(),
+                    const MyDropdownButton(),
+                    const SizedBox(width: 5),
+                    InkWell(
+                      onTap: () => Get.toNamed("/signUp"),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 30),
+                        decoration: const BoxDecoration(
+                            color: Colors.green,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: const Text(
+                          "Sign In",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Obx(() {
